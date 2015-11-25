@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="sale.view_order_tree"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name ='state']" position='after'>
-                    <field name="margin" groups="base.group_sale_salesman_all_leads,base.group_sale_salesman"/>
+                    <field name="margin" groups="base.group_sale_manager"/>
                 </xpath>
             </field>
         </record>
@@ -19,7 +19,7 @@
             <field name="inherit_id" ref="sale_margin.sale_margin_sale_order"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='margin']" position='replace'>
-                    <field name="margin" groups="base.group_sale_salesman_all_leads,base.group_sale_salesman"/>
+                    <field name="margin" groups="base.group_sale_manager"/>
                 </xpath>
             </field>
         </record>
