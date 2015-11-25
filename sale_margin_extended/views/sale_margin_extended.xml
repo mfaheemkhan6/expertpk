@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <openerp>
+    <data>
+        <!-- Add instructor field to existing view -->
+        <record model="ir.ui.view" id="sale_margin_extended_tree_order">
+            <field name="name">sale.margin.extended.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name ='state']" position='after'>
+                    <field name="margin" groups="base.group_sale_salesman_all_leads,base.group_sale_salesman"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sale_margin_extended_form_order">
+            <field name="name">sale.margin.extended.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_margin.sale_margin_sale_order"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='margin']" position='replace'>
+                    <field name="margin" groups="base.group_sale_salesman_all_leads,base.group_sale_salesman"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
