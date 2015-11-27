@@ -1,3 +1,2 @@
 # -*- coding: utf-8 -*-
-import sale_margin_extended
-
+from . import sale_margin_extended

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Custom report-->
+<openerp>
+<data>
+    <template id="report_slae_summury_document">
+        <t t-call="report.external_layout">
+            <div class="page">
+                <div class="row">
+                   <h2>
+                        <span>Slae Summury</span>
+                    </h2>
+                </div>
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-xs-3">
+                        <strong >Date From:</strong>
+                        <p> Date_Field_From</p>
+                    </div>
+                    <div class="col-xs-3">
+                        <strong >Date To:</strong>
+                        <p> Date_Field_TO</p>
+                    </div>
+                </div>
+                <div class="row mt32 mb32" id="informations">
+                    <div t-if="o.user_id.name" class="col-xs-3">
+                        <strong>Salesperson:</strong>
+                        <p t-field="o.user_id.name"/>
+                    </div>
+                </div>
+                <div class="row mt32 mb32" id="informations">
+                    <div t-if="o.category_id.name" class="col-xs-3">
+                        <strong>Customer Category:</strong>
+                        <p t-field="o.category_id.name"/>
+                    </div>
+                </div>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th class="text-center">Customer Name</th>
+                            <th class="text-center">Sale Order ID</th>
+                            <th class="text-right">Total</th>
+                        </tr>
+                   </thead>
+                </table>
+                <div class="row">
+                    <div class="col-xs-4 pull-right">
+                        <table class="table table-condensed">
+                            <tr class="border-black">
+                                <td><strong>Total Sales</strong></td>
+                                <td class="text-right">
+                                    <span>0.00</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                   <h2>
+                        <span>Total Outgoing Products</span>
+                    </h2>
+                </div>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th class="text-center">Description</th>
+                            <th class="text-center">Qty</th>
+                            <th class="text-right">Total</th>
+                        </tr>
+                        <h3><t t-raw="get_sale_order_line"/></h3>
+                   </thead>
+                </table>
+            </div>
+        </t>
+    </template>
+     
+    <template id="report_slae_summury">
+        <t t-call="report.html_container">
+            <t t-foreach="doc_ids" t-as="doc_id">
+                <t t-raw="translate_doc(doc_id, doc_model, 'lang','sale_margin_extended.report_slae_summury_document')"/>
+            </t>
+        </t>
+    </template>
+</data>
+</openerp>

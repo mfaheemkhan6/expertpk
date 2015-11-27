@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="wizard_slae_summury_form_view" model="ir.ui.view">
+            <field name="name">Slae Summury Wizzard</field>
+            <field name="model">slae_summury.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Report Options">
+                    <group col="4">
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <footer>
+                        <button name="check_report" string="Print" type="object" default_focus="1" class="oe_highlight"/>
+                        or 
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_slae_summury_wizard_menu" model="ir.actions.act_window">
+            <field name="name">Slae Summury Wizzard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">slae_summury.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_slae_summury_form_view"/>
+            <field name="target">new</field>
+        </record>
+
+
+        <record id="action_slae_summury_wizard_values" model="ir.values">
+            <field name="name">Slae Summury Wizzard</field>
+            <field name="key2">client_print_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' +str(ref('action_slae_summury_wizard_menu'))" />
+            <field name="key">action</field>
+            <field name="model">res.partner</field>
+        </record>
+    </data>
+</openerp>

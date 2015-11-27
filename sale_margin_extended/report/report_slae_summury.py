@@ -17,40 +17,28 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-#    Developed by: Expert IT Solutions
-#    Coded by: Aular Hector Manuel (aular.hector3@gmail.com)
-#
 ##############################################################################
 
-{
-    'name': "Margins in Sales Orders extended",
+from openerp import tools
+from openerp import models, fields, api
 
-    'summary': """
-        the margin field has been add to the tree view""",
 
-    'description': """
-        This module add a field (margin) on tree view in Sales Orders
-    """,
+class SaleMarginExtended(models.AbstractModel):
 
-    'author': "Expert IT Solutions",
-    'website': "https://expertpk.com/",
+    _name = 'report.sale_margin_extended.report_slae_summury'
 
-    'category': 'Sales Management',
-    'version': '1.0',
-    'depends': [
-                'base',
-                'sale',
-                'sale_margin',
-    ],
-    'data': [
-        'views/report_slae_summury.xml',
-        'views/sale_margin_extended.xml',
-        'report/report.xml',
-        'wizards/wizard_sale_margin_extended.xml',
-        # 'security/ir.model.access.csv',
-        # 'sale_margin_extended_templates.xml',
-    ],
-    'demo': [
-        'demo/demo.xml',
-    ],
-}
+    def _get_sale_order_line(self, data):
+        print False
+
+    @api.multi
+    def render_html(self, data=None):
+        report_obj = self.env['report']
+        report = report_obj._get_report_from_name('sale_margin_extended.report_slae_summury')
+        report_sale_order_line = self._get_sale_order_line(data)
+        docargs = {
+            'doc_ids': self.ids,
+            'doc_model': report.model,
+            'docs': self,
+            'get_sale_order_line': report_sale_order_line
+        }
+        return report_obj.render('sale_margin_extended.report_slae_summury', docargs)

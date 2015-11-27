@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data> 
+       <report 
+        id="custom_report_slae_summury" 
+        model="res.partner" 
+        string="Slae Summury" 
+        report_type="qweb-pdf" 
+        name="sale_margin_extended.report_slae_summury" 
+        file="sale_margin_extended.report_slae_summury" 
+        attachment_use="False" 
+        menu="True"
+        />
+    </data>
+</openerp>
