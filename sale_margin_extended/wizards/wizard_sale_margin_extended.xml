@@ -2,7 +2,7 @@
 <openerp>
     <data>
         <record id="wizard_slae_summury_form_view" model="ir.ui.view">
-            <field name="name">Slae Summury Wizzard</field>
+            <field name="name">Slae Summury</field>
             <field name="model">slae_summury.wizard</field>
             <field name="arch" type="xml">
                 <form string="Report Options">
@@ -20,7 +20,7 @@
         </record>
 
         <record id="action_slae_summury_wizard_menu" model="ir.actions.act_window">
-            <field name="name">Slae Summury Wizzard</field>
+            <field name="name">Slae Summury</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">slae_summury.wizard</field>
             <field name="view_type">form</field>
@@ -31,7 +31,7 @@
 
 
         <record id="action_slae_summury_wizard_values" model="ir.values">
-            <field name="name">Slae Summury Wizzard</field>
+            <field name="name">Slae Summury</field>
             <field name="key2">client_print_multi</field>
             <field name="value" eval="'ir.actions.act_window,' +str(ref('action_slae_summury_wizard_menu'))" />
             <field name="key">action</field>

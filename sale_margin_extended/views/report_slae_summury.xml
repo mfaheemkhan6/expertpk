@@ -13,11 +13,11 @@
                 <div class="row mt32 mb32" id="informations">
                     <div class="col-xs-3">
                         <strong >Date From:</strong>
-                        <p> Date_Field_From</p>
+                        <p t-raw="data['form']['date_from']"/>
                     </div>
                     <div class="col-xs-3">
                         <strong >Date To:</strong>
-                        <p> Date_Field_TO</p>
+                        <p t-raw="data['form']['date_to']"/>
                     </div>
                 </div>
                 <div class="row mt32 mb32" id="informations">
@@ -67,7 +67,7 @@
                             <th class="text-center">Qty</th>
                             <th class="text-right">Total</th>
                         </tr>
-                        <h3><t t-raw="get_sale_order_line"/></h3>
+                        <h3><t t-esc="get_sale_order_line(data)"/></h3>
                    </thead>
                 </table>
             </div>

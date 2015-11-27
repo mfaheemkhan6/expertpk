@@ -9,7 +9,7 @@
         name="sale_margin_extended.report_slae_summury" 
         file="sale_margin_extended.report_slae_summury" 
         attachment_use="False" 
-        menu="True"
+        menu="False"
         />
     </data>
 </openerp>

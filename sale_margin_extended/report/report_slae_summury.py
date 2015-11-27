@@ -19,26 +19,31 @@
 #
 ##############################################################################
 
-from openerp import tools
-from openerp import models, fields, api
+import time
+from openerp.osv import osv
+from openerp.tools.translate import _
+from openerp.report import report_sxw
+from openerp import SUPERUSER_ID
 
 
-class SaleMarginExtended(models.AbstractModel):
+class SaleMarginExtended(report_sxw.rml_parse):
 
     _name = 'report.sale_margin_extended.report_slae_summury'
 
-    def _get_sale_order_line(self, data):
-        print False
+    def __init__(self, cr, uid, name, context=None):
+        super(SaleMarginExtended, self).__init__(cr, uid, name, context=context)
+        self.init_bal_sum = 0.0
+        self.amount_currency = {}
+        self.localcontext.update({
+            'get_sale_order_line': self._get_sale_order_line,
+        })
 
-    @api.multi
-    def render_html(self, data=None):
-        report_obj = self.env['report']
-        report = report_obj._get_report_from_name('sale_margin_extended.report_slae_summury')
-        report_sale_order_line = self._get_sale_order_line(data)
-        docargs = {
-            'doc_ids': self.ids,
-            'doc_model': report.model,
-            'docs': self,
-            'get_sale_order_line': report_sale_order_line
-        }
-        return report_obj.render('sale_margin_extended.report_slae_summury', docargs)
+    def _get_sale_order_line(self, data):
+        pass
+
+
+class report_partnerledger(osv.AbstractModel):
+    _name = 'report.sale_margin_extended.report_slae_summury'
+    _inherit = 'report.abstract_report'
+    _template = 'sale_margin_extended.report_slae_summury'
+    _wrapped_report_class = SaleMarginExtended
