@@ -36,12 +36,40 @@ class SaleMarginExtended(report_sxw.rml_parse):
         })
 
     def _get_sale_order_line(self, data):
+        result = []
+        total_otgoing = 0
+        total_customer = 0
+        pos = 1
+
         sale_order_obj = self.pool.get('sale.order')
         sale_order_line_obj = self.pool.get('sale.order.line')
-        sale_order_ids = sale_order_obj.search(self.cr, self.uid, [('partner_id', '=', data['ids'])])
-        import pdb
-        pdb.set_trace()
-        return False
+
+        sale_order_condition = [
+            ('user_id', 'in', [data['form']['user_id'][0]]),
+            ('state', '=', 'manual')
+        ]
+
+        sale_order_ids = sale_order_obj.search(self.cr, self.uid, sale_order_condition)
+
+        for sale_order in sale_order_obj.browse(self.cr, self.uid, sale_order_ids, context=data['form']['used_context']):
+            sale_dic = {
+                'no': pos,
+                'customer': sale_order.partner_id.name,
+                'sale_order_id': sale_order.name,
+                'total': sale_order.amount_total
+            }
+            pos += 1
+            result.append(sale_dic)
+            #sale_order_condition = [
+            #    ('order_id', 'in', [sale_order.id]),
+            #    ('state', '=', 'confirmed')
+            #]
+
+            #sale_order_ids = sale_order_line_obj.search(self.cr, self.uid, sale_order_condition)
+
+            #for sale_order_line in sale_order_line_obj.browse(self.cr, self.uid, sale_order_ids, context=data['form']['used_context']):
+            #    sale_dic['total'] += sale_order_line.price_unit*sale_order_line.
+        return result
 
 
 class report_partnerledger(osv.AbstractModel):

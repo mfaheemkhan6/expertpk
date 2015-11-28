@@ -2,7 +2,7 @@
 <!--Custom report-->
 <openerp>
 <data>
-    <template id="report_slae_summury_document">
+    <template id="report_slae_summury">
         <t t-call="report.external_layout">
             <div class="page">
                 <div class="row">
@@ -21,9 +21,9 @@
                     </div>
                 </div>
                 <div class="row mt32 mb32" id="informations">
-                    <div t-if="o.user_id.name" class="col-xs-3">
+                    <div t-if="data['form']['user_id'][1]" class="col-xs-3">
                         <strong>Salesperson:</strong>
-                        <p t-field="o.user_id.name"/>
+                        <p t-raw="data['form']['user_id'][1]"/>
                     </div>
                 </div>
                 <table class="table table-condensed">
@@ -35,6 +35,24 @@
                             <th class="text-right">Total</th>
                         </tr>
                    </thead>
+                   <tbody class="sale_tbody">
+                    <t t-set="total_sales" t-value="0"/>
+                    <tr t-foreach="get_sale_order_line(data)" t-as="l">
+                        <td>
+                           <span t-esc="l['no']"/>
+                        </td>
+                        <td class="text-center">
+                           <span t-esc="l['customer']"/>
+                        </td>
+                        <td class="text-center">
+                           <span t-esc="l['sale_order_id']"/>
+                        </td>
+                        <td class="text-right">
+                           <span t-esc="l['total']"/>
+                        </td>
+                        <t t-set="total_sales" t-value="total_sales+l['total']"/> 
+                    </tr>
+                </tbody>
                 </table>
                 <div class="row">
                     <div class="col-xs-4 pull-right">
@@ -42,7 +60,7 @@
                             <tr class="border-black">
                                 <td><strong>Total Sales</strong></td>
                                 <td class="text-right">
-                                    <span>0.00</span>
+                                    <t t-esc="total_sales"/>
                                 </td>
                             </tr>
                         </table>
@@ -61,18 +79,10 @@
                             <th class="text-center">Qty</th>
                             <th class="text-right">Total</th>
                         </tr>
-                        <h3><t t-esc="get_sale_order_line(data)"/></h3>
+                        <h3></h3>
                    </thead>
                 </table>
             </div>
-        </t>
-    </template>
-     
-    <template id="report_slae_summury">
-        <t t-call="report.html_container">
-            <t t-foreach="doc_ids" t-as="doc_id">
-                <t t-raw="translate_doc(doc_id, doc_model, 'lang','sale_margin_extended.report_slae_summury_document')"/>
-            </t>
         </t>
     </template>
 </data>
