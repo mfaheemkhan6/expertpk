@@ -26,12 +26,6 @@
                         <p t-field="o.user_id.name"/>
                     </div>
                 </div>
-                <div class="row mt32 mb32" id="informations">
-                    <div t-if="o.category_id.name" class="col-xs-3">
-                        <strong>Customer Category:</strong>
-                        <p t-field="o.category_id.name"/>
-                    </div>
-                </div>
                 <table class="table table-condensed">
                     <thead>
                         <tr>

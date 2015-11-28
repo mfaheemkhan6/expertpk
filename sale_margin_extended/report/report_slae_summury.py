@@ -19,11 +19,8 @@
 #
 ##############################################################################
 
-import time
 from openerp.osv import osv
-from openerp.tools.translate import _
 from openerp.report import report_sxw
-from openerp import SUPERUSER_ID
 
 
 class SaleMarginExtended(report_sxw.rml_parse):
@@ -39,7 +36,12 @@ class SaleMarginExtended(report_sxw.rml_parse):
         })
 
     def _get_sale_order_line(self, data):
-        pass
+        sale_order_obj = self.pool.get('sale.order')
+        sale_order_line_obj = self.pool.get('sale.order.line')
+        sale_order_ids = sale_order_obj.search(self.cr, self.uid, [('partner_id', '=', data['ids'])])
+        import pdb
+        pdb.set_trace()
+        return False
 
 
 class report_partnerledger(osv.AbstractModel):
