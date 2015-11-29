@@ -55,7 +55,7 @@ class SaleMarginExtended(report_sxw.rml_parse):
             ('user_id', 'in', [data['form']['user_id'][0]]),
             ('date_order', '>=', data['form']['date_from']),
             ('date_order', '<=', data['form']['date_to']),
-            ('state', '=', 'manual')
+            ('state', 'not in', ['draft', 'sent', 'cancel'])
         ]
 
         sale_order_ids = sale_order_obj.search(self.cr, self.uid, sale_order_condition)
