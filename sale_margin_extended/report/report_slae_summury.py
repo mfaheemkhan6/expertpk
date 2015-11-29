@@ -76,7 +76,7 @@ class SaleMarginExtended(report_sxw.rml_parse):
 
         sale_order_condition = [
             ('order_id', 'in', sale_order_ids),
-            ('state', '=', 'confirmed')
+            ('state', 'not in', ['draft', 'sent', 'cancel'])
         ]
 
         sale_line_dic = {
