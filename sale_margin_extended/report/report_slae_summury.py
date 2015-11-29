@@ -36,9 +36,9 @@ class SaleMarginExtended(report_sxw.rml_parse):
         })
 
     def _get_sale_order_line(self, data):
+        consult = {}
         result = []
-        total_otgoing = 0
-        total_customer = 0
+        sale_order_ids = []
         pos = 1
 
         sale_order_obj = self.pool.get('sale.order')
@@ -50,7 +50,6 @@ class SaleMarginExtended(report_sxw.rml_parse):
         ]
 
         sale_order_ids = sale_order_obj.search(self.cr, self.uid, sale_order_condition)
-
         for sale_order in sale_order_obj.browse(self.cr, self.uid, sale_order_ids, context=data['form']['used_context']):
             sale_dic = {
                 'no': pos,
@@ -60,16 +59,40 @@ class SaleMarginExtended(report_sxw.rml_parse):
             }
             pos += 1
             result.append(sale_dic)
-            #sale_order_condition = [
-            #    ('order_id', 'in', [sale_order.id]),
-            #    ('state', '=', 'confirmed')
-            #]
+            sale_order_ids.append(sale_order.id)
 
-            #sale_order_ids = sale_order_line_obj.search(self.cr, self.uid, sale_order_condition)
+        consult['sale_order'] = result
+        result = []
+        pos = 1
 
-            #for sale_order_line in sale_order_line_obj.browse(self.cr, self.uid, sale_order_ids, context=data['form']['used_context']):
-            #    sale_dic['total'] += sale_order_line.price_unit*sale_order_line.
-        return result
+        sale_order_condition = [
+            ('order_id', 'in', sale_order_ids),
+            ('state', '=', 'confirmed')
+        ]
+
+        sale_line_dic = {
+            'name': False,
+        }
+
+        sale_order_ids = sale_order_line_obj.search(self.cr, self.uid, sale_order_condition, order='name')
+        for sale_order_line in sale_order_line_obj.browse(self.cr, self.uid, sale_order_ids, context=data['form']['used_context']):
+
+            if sale_order_line.name == sale_line_dic['name']:
+                sale_line_dic['qty'] += sale_order_line.product_uom_qty
+                sale_line_dic['total'] += sale_order_line.product_uom_qty * sale_order_line.price_unit
+            else:
+                sale_line_dic = {
+                    'no': pos,
+                    'name': sale_order_line.name,
+                    'qty': sale_order_line.product_uom_qty,
+                    'total': sale_order_line.product_uom_qty * sale_order_line.price_unit,
+                }
+                result.append(sale_line_dic)
+
+            pos += 1
+        consult['sale_order_line'] = result
+
+        return consult
 
 
 class report_partnerledger(osv.AbstractModel):

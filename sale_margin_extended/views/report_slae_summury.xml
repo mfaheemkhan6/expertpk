@@ -34,25 +34,26 @@
                             <th class="text-center">Sale Order ID</th>
                             <th class="text-right">Total</th>
                         </tr>
-                   </thead>
-                   <tbody class="sale_tbody">
-                    <t t-set="total_sales" t-value="0"/>
-                    <tr t-foreach="get_sale_order_line(data)" t-as="l">
-                        <td>
-                           <span t-esc="l['no']"/>
-                        </td>
-                        <td class="text-center">
-                           <span t-esc="l['customer']"/>
-                        </td>
-                        <td class="text-center">
-                           <span t-esc="l['sale_order_id']"/>
-                        </td>
-                        <td class="text-right">
-                           <span t-esc="l['total']"/>
-                        </td>
-                        <t t-set="total_sales" t-value="total_sales+l['total']"/> 
-                    </tr>
-                </tbody>
+                    </thead>
+                    <tbody class="sale_tbody">
+                        <t t-set="total_sales" t-value="0"/>
+                        <t t-set="get_sales" t-value="get_sale_order_line(data)"/>
+                        <tr t-foreach="get_sales['sale_order']" t-as="l">
+                            <td>
+                               <span t-esc="l['no']"/>
+                            </td>
+                            <td class="text-center">
+                               <span t-esc="l['customer']"/>
+                            </td>
+                            <td class="text-center">
+                               <span t-esc="l['sale_order_id']"/>
+                            </td>
+                            <td class="text-right">
+                               <span t-esc="l['total']"/>
+                            </td>
+                            <t t-set="total_sales" t-value="total_sales+l['total']"/> 
+                        </tr>
+                    </tbody>
                 </table>
                 <div class="row">
                     <div class="col-xs-4 pull-right">
@@ -79,8 +80,23 @@
                             <th class="text-center">Qty</th>
                             <th class="text-right">Total</th>
                         </tr>
-                        <h3></h3>
-                   </thead>
+                    </thead>
+                    <tbody class="sale_tbody">
+                        <tr t-foreach="get_sales['sale_order_line']" t-as="l">
+                            <td>
+                               <span t-esc="l['no']"/>
+                            </td>
+                            <td class="text-center">
+                               <span t-esc="l['name']"/>
+                            </td>
+                            <td class="text-center">
+                               <span t-esc="l['qty']"/>
+                            </td>
+                            <td class="text-right">
+                               <span t-esc="l['total']"/>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </t>
