@@ -50,14 +50,29 @@ class SaleMarginExtended(report_sxw.rml_parse):
 
         sale_order_obj = self.pool.get('sale.order')
         sale_order_line_obj = self.pool.get('sale.order.line')
+        self.cr.execute("SELECT * from res_partner_res_partner_category_rel ")
+
+        if data['form']['user_id']:
+            cond = 'in'
+            user_id = data['form']['user_id'][0]
+        else:
+            cond = 'not in'
+            user_id = data['form']['user_id']
+
+        cond2 = 'in' if data['form']['category_id'] else 'not in'
+        partner_id = [x[1] for x in self.cr.fetchall() if x[0] in data['form']['category_id'] ]
 
         sale_order_condition = [
-            ('user_id', 'in', [data['form']['user_id'][0]]),
+            ('user_id', cond, [user_id]),
             ('date_order', '>=', data['form']['date_from']),
             ('date_order', '<=', data['form']['date_to']),
             ('state', 'not in', ['draft', 'sent', 'cancel'])
         ]
-
+        sale_order_ids = sale_order_obj.search(self.cr, self.uid, sale_order_condition)
+        sale_order_condition = [
+            ('partner_id', cond2, partner_id),
+            ('id', 'in', sale_order_ids),
+        ]        
         sale_order_ids = sale_order_obj.search(self.cr, self.uid, sale_order_condition)
         for sale_order in sale_order_obj.browse(self.cr, self.uid, sale_order_ids, context=data['form']['used_context']):
             sale_dic = {

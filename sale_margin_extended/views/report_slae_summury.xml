@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="row mt32 mb32" id="informations">
-                    <div t-if="data['form']['user_id'][1]" class="col-xs-3">
+                    <div t-if="data['form']['user_id']" class="col-xs-3">
                         <strong>Salesperson:</strong>
                         <p t-raw="data['form']['user_id'][1]"/>
                     </div>
