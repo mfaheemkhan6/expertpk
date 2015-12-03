@@ -28,6 +28,7 @@
 
 import time
 from openerp.osv import fields, osv
+from openerp import api, exceptions
 from datetime import datetime
 from dateutil import relativedelta
 
@@ -46,6 +47,12 @@ class WizardSaleMarginExtended(osv.osv_memory):
         'date_from': lambda *a: time.strftime('%Y-%m-01'),
         'date_to': lambda *a: str(datetime.now() + relativedelta.relativedelta(months=+1, day=1, days=-1))[:10],
     }
+
+    @api.constrains('date_from', 'date_to')
+    def _check_date(self):
+        for record in self:
+            if record.date_to < record.date_from:
+                raise exceptions.ValidationError("Ended date must be equal o later than Started date")
 
     def _print_report(self, cr, uid, ids, data, context=None):
         if context is None:

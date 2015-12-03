@@ -43,11 +43,10 @@ class SaleMarginExtended(report_sxw.rml_parse):
         })
 
     def _get_sale_order_line(self, data):
-        consult = {}
-        result = []
-        sale_order_ids = []
+        consult = dict()
+        result = list()
+        sale_order_ids = list()
         pos = 1
-
         sale_order_obj = self.pool.get('sale.order')
         sale_order_line_obj = self.pool.get('sale.order.line')
         self.cr.execute("SELECT * from res_partner_res_partner_category_rel ")
@@ -84,7 +83,6 @@ class SaleMarginExtended(report_sxw.rml_parse):
             pos += 1
             result.append(sale_dic)
             sale_order_ids.append(sale_order.id)
-
         consult['sale_order'] = result
         result = []
         pos = 1
@@ -94,10 +92,7 @@ class SaleMarginExtended(report_sxw.rml_parse):
             ('state', 'not in', ['draft', 'sent', 'cancel'])
         ]
 
-        sale_line_dic = {
-            'name': False,
-        }
-
+        sale_line_dic = dict(name = False)
         sale_order_ids = sale_order_line_obj.search(self.cr, self.uid, sale_order_condition, order='name')
         for sale_order_line in sale_order_line_obj.browse(self.cr, self.uid, sale_order_ids, context=data['form']['used_context']):
 

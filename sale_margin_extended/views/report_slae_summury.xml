@@ -48,8 +48,9 @@
                             <td class="text-center">
                                <span t-esc="l['sale_order_id']"/>
                             </td>
+                            <t t-debug="pdb"/>
                             <td class="text-right">
-                               <span t-esc="l['total']"/>
+                               <span t-esc="l['total']" t-esc-options='{"widget": "monetary", "display_currency": "o.pricelist_id.currency_id"}'/>
                             </td>
                             <t t-set="total_sales" t-value="total_sales+l['total']"/> 
                         </tr>
