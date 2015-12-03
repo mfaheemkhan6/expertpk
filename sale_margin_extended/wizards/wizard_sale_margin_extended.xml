@@ -33,7 +33,7 @@
             <field name="target">new</field>
         </record>
 
-        <menuitem name="Slae Summury" id="menu_slae_summury_wizard" parent="base.menu_sales"
-            action="action_slae_summury_wizard_menu" />
+        <menuitem id="base.menu_sales_report" name="Report" parent="base.menu_base_partner" sequence="1"/>
+        <menuitem name="Slae Summury" id="menu_slae_summury_wizard" parent="base.menu_sales_report" action="action_slae_summury_wizard_menu" />
     </data>
 </openerp>

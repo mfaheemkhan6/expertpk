@@ -8,7 +8,7 @@
         report_type="qweb-pdf" 
         name="sale_margin_extended.report_slae_summury" 
         file="sale_margin_extended.report_slae_summury" 
-        attachment_use="False" 
+        attachment_use="True" 
         menu="False"
         />
     </data>
