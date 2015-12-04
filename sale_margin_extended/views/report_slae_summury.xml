@@ -49,7 +49,7 @@
                                <span t-esc="l['sale_order_id']"/>
                             </td>
                             <td class="text-right">
-                               <span t-esc="l['total']"/>
+                               <span t-esc="formatLang(l['total'], currency_obj=res_company.currency_id)"/>
                             </td>
                             <t t-set="total_sales" t-value="total_sales+l['total']"/> 
                         </tr>
@@ -61,7 +61,7 @@
                             <tr class="border-black">
                                 <td><strong>Total Sales</strong></td>
                                 <td class="text-right">
-                                    <t t-esc="total_sales"/>
+                                    <t t-esc="formatLang(total_sales, currency_obj=res_company.currency_id)"/>
                                 </td>
                             </tr>
                         </table>
@@ -94,7 +94,7 @@
                                <span t-esc="l['qty']"/>
                             </td>
                             <td class="text-right">
-                               <span t-esc="l['total']"/>
+                               <span t-esc="formatLang(l['total'], currency_obj=res_company.currency_id)"/>
                             </td>
                             <t t-set="total_sales_line" t-value="total_sales_line+l['total']"/>
                         </tr>
@@ -106,7 +106,7 @@
                             <tr class="border-black">
                                 <td><strong>Total products</strong></td>
                                 <td class="text-right">
-                                    <t t-esc="total_sales_line"/>
+                                    <t t-esc="formatLang(total_sales_line, currency_obj=res_company.currency_id)"/>
                                 </td>
                             </tr>
                         </table>
