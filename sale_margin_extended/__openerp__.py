@@ -17,7 +17,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-#    Developed by: Expert IT Solutions
+#    Developed by: thinkasoft , C.A.
 #    Coded by: Aular Hector Manuel (aular.hector3@gmail.com)
 #
 ##############################################################################

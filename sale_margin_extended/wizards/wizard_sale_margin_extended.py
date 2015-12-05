@@ -27,10 +27,11 @@
 ##############################################################################
 
 import time
+import calendar
+
 from openerp.osv import fields, osv
 from openerp import api, exceptions
 from datetime import datetime
-from dateutil import relativedelta
 
 
 class WizardSaleMarginExtended(osv.osv_memory):
@@ -38,14 +39,21 @@ class WizardSaleMarginExtended(osv.osv_memory):
     _inherit = "account.common.account.report"
     _name = 'slae_summury.wizard'
 
+    def _get_category(self, cr, uid, ids, category_ids, context=None):
+        category_list = list()
+        res_partner_category_obj = self.pool.get('res.partner.category')
+        for category in res_partner_category_obj.browse(cr, uid, category_ids, context=False):
+            category_list.append(category.name)
+        return dict(category_names=category_list)
+
     _columns = {
         'user_id': fields.many2one('res.users', 'Salesperson', readonly=False,),
         'category_id': fields.many2many('res.partner.category', id1='partner_id',
-         id2='category_id', string='Category' ,readonly=False),
+                                        id2='category_id', string='Category', readonly=False),
     }
     _defaults = {
         'date_from': lambda *a: time.strftime('%Y-%m-01'),
-        'date_to': lambda *a: str(datetime.now() + relativedelta.relativedelta(months=+1, day=1, days=-1))[:10],
+        'date_to': lambda *a: "%s-%s-%s" % (datetime.now().year, datetime.now().month, calendar.monthrange(datetime.now().year, datetime.now().month)[1]),
     }
 
     @api.constrains('date_from', 'date_to')
@@ -57,7 +65,8 @@ class WizardSaleMarginExtended(osv.osv_memory):
     def _print_report(self, cr, uid, ids, data, context=None):
         if context is None:
             context = {}
-
-        data = self.pre_print_report(cr, uid, ids, data, context=context)
-        data['form'].update(self.read(cr, uid, ids, ['date_from', 'date_to', 'user_id','category_id'])[0])
+        category_ids = self.read(cr, uid, ids, ['category_id'], context)
+        category_names = False if not category_ids else self._get_category(cr, uid, ids, category_ids[0]['category_id'], context)
+        data['form'].update(self.read(cr, uid, ids, ['date_from', 'date_to', 'user_id', 'category_id'])[0])
+        data['form'].update(category_names)
         return self.pool['report'].get_action(cr, uid, [], 'sale_margin_extended.report_slae_summury', data=data, context=context)
