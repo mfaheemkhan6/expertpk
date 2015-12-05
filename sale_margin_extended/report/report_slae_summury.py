@@ -59,7 +59,7 @@ class SaleMarginExtended(report_sxw.rml_parse):
             user_id = data['form']['user_id']
 
         cond2 = 'in' if data['form']['category_id'] else 'not in'
-        partner_id = [x[1] for x in self.cr.fetchall() if x[0] in data['form']['category_id'] ]
+        partner_id = [x[1] for x in self.cr.fetchall() if x[0] in data['form']['category_id']]
 
         sale_order_condition = [
             ('user_id', cond, [user_id]),
@@ -71,7 +71,7 @@ class SaleMarginExtended(report_sxw.rml_parse):
         sale_order_condition = [
             ('partner_id', cond2, partner_id),
             ('id', 'in', sale_order_ids),
-        ]        
+        ]
         sale_order_ids = sale_order_obj.search(self.cr, self.uid, sale_order_condition)
         for sale_order in sale_order_obj.browse(self.cr, self.uid, sale_order_ids, context=data['form']['used_context']):
             sale_dic = {
@@ -92,7 +92,7 @@ class SaleMarginExtended(report_sxw.rml_parse):
             ('state', 'not in', ['draft', 'sent', 'cancel'])
         ]
 
-        sale_line_dic = dict(name = False)
+        sale_line_dic = dict(name=False)
         sale_order_ids = sale_order_line_obj.search(self.cr, self.uid, sale_order_condition, order='name')
         for sale_order_line in sale_order_line_obj.browse(self.cr, self.uid, sale_order_ids, context=data['form']['used_context']):
 
@@ -114,7 +114,7 @@ class SaleMarginExtended(report_sxw.rml_parse):
         return consult
 
 
-class report_partnerledger(osv.AbstractModel):
+class ReportPartnerledger(osv.AbstractModel):
     _name = 'report.sale_margin_extended.report_slae_summury'
     _inherit = 'report.abstract_report'
     _template = 'sale_margin_extended.report_slae_summury'
