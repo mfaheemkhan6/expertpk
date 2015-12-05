@@ -43,6 +43,7 @@
                 'sale_margin',
     ],
     'data': [
+        'data/sale_margin_extended.xml'
         'views/report_slae_summury.xml',
         'views/sale_margin_extended.xml',
         'report/report.xml',
